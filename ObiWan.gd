@@ -1,31 +1,24 @@
 extends KinematicBody2D
 
-# ObiWan COmputer
+# ObiWan Computer
 
 const GRAVITY = 400
 const SPEED = 60
-
 const UP_VECTOR = Vector2(0,  -1)
+
 var movement = Vector2()
 
-var moveRand
-
 func _ready():
-	#moveRand = randomize()
+	pass
 	
-	var Player =  get_node("../Player/Sprite")
-	var PlayerPosX = Player.position.x
-	var PlayerPosY = Player.position.y
+func _process(delta):
 	
-	var SelfPlayer =  get_node("Sprite")
-	var SelfPosX = SelfPlayer.position.x
-	
-	if PlayerPosX > SelfPosX:
-		movement.x = 1 * SPEED
-	else:
-		movement.x = -1 * SPEED
-		
-	movement.y += GRAVITY #* delta
+	var Player =  get_node("../Player").get_position()
+#
+	movement = position.direction_to(Player) * SPEED
+			
+	movement.y += GRAVITY * delta
+	#look_at(Player)
 	move_and_slide(movement, UP_VECTOR)
 	
 	pass
